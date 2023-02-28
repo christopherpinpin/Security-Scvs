@@ -98,6 +98,7 @@ public class Main {
             System.out.println(" Password: " + users.get(nCtr).getPassword());
             System.out.println(" Role: " + users.get(nCtr).getRole());
             System.out.println(" Locked: " + users.get(nCtr).getLocked());
+            System.out.println(" Attempts: " + users.get(nCtr).getAttempts());
         }
 //        sqlite.updateUser("client3", "locked", 0);
         // Initialize User Interface

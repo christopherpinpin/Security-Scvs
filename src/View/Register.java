@@ -153,7 +153,7 @@ public class Register extends javax.swing.JPanel {
             passMatch = true;
         }
         
-        if(frame.main.sqlite.getUser(usernameFld.getText()) == null){
+        if(frame.main.sqlite.getUser(usernameFld.getText().toLowerCase()) == null){
             usernameValid = true;
         }
         
@@ -180,10 +180,13 @@ public class Register extends javax.swing.JPanel {
                  JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.registerAction(usernameFld.getText(), passwordFld.getText(), confpassFld.getText());
+            frame.registerAction(usernameFld.getText().toLowerCase(), passwordFld.getText(), confpassFld.getText());
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");
+            errorMsg.setText("");
+            errorMsg1.setText("");
+            errorMsg2.setText("");
             frame.loginNav();
         }
     }//GEN-LAST:event_registerBtnActionPerformed
@@ -200,7 +203,7 @@ public class Register extends javax.swing.JPanel {
 
     private void usernameFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFldKeyReleased
         ArrayList<User> users = frame.main.sqlite.getUsers();
-        String username = usernameFld.getText();
+        String username = usernameFld.getText().toLowerCase();
         int found = -1;
         
         for(int i = 0 ; i < users.size() ; i++){
