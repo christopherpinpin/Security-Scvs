@@ -180,7 +180,8 @@ public class Register extends javax.swing.JPanel {
                  JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.registerAction(usernameFld.getText().toLowerCase(), passwordFld.getText(), confpassFld.getText());
+            String password = frame.main.hashPassword(passwordFld.getText());
+            frame.registerAction(usernameFld.getText().toLowerCase(), password, confpassFld.getText());
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");

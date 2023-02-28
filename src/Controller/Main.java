@@ -10,6 +10,15 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+// PBKDF2 Imports
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 
 
 public class Main {
@@ -18,6 +27,37 @@ public class Main {
     
     public static void main(String[] args) {
         new Main().init();
+    }
+    
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+    
+    public String hashPassword( String passwordStr ) {
+        String saltStr = "1234";
+        int iterations = 10000;
+        int keyLength = 512;
+        byte[] salt = saltStr.getBytes();
+        char[] password = passwordStr.toCharArray();
+        try {
+            SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
+            PBEKeySpec spec = new PBEKeySpec( password, salt, iterations, keyLength );
+            SecretKey key = skf.generateSecret( spec );
+            byte[] res = key.getEncoded( );
+            String hashed = bytesToHex(res);
+            System.out.println("Hashed: " + hashed);
+            return hashed;
+        } catch ( NoSuchAlgorithmException | InvalidKeySpecException e ) {
+            throw new RuntimeException( e );
+        }
     }
     
     public void init(){
@@ -55,11 +95,11 @@ public class Main {
 //        sqlite.addProduct("Scanner", 10, 100.0);
 //
 //        // Add sample users
-//        sqlite.addUser("admin", "qwerty1234" , 5);
-//        sqlite.addUser("manager", "qwerty1234", 4);
-//        sqlite.addUser("staff", "qwerty1234", 3);
-//        sqlite.addUser("client1", "qwerty1234", 2);
-//        sqlite.addUser("client2", "qwerty1234", 2);
+//        sqlite.addUser("admin", hashPassword("qwerty1234") , 5);
+//        sqlite.addUser("manager", hashPassword("qwerty1234"), 4);
+//        sqlite.addUser("staff", hashPassword("qwerty1234"), 3);
+//        sqlite.addUser("client1", hashPassword("qwerty1234"), 2);
+//        sqlite.addUser("client2", hashPassword("qwerty1234"), 2);
 //        
 //        
 //        // Get users
