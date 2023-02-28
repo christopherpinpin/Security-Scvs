@@ -86,7 +86,8 @@ public class SQLite {
             + " username TEXT NOT NULL UNIQUE,\n"
             + " password TEXT NOT NULL,\n"
             + " role INTEGER DEFAULT 2,\n"
-            + " locked INTEGER DEFAULT 0\n"
+            + " locked INTEGER DEFAULT 0,\n"
+            + " attempts INTEGER DEFAULT 0\n"
             + ");";
 
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -261,7 +262,7 @@ public class SQLite {
     }
     
     public ArrayList<User> getUsers(){
-        String sql = "SELECT id, username, password, role, locked FROM users";
+        String sql = "SELECT id, username, password, role, locked, attempts FROM users";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -273,7 +274,8 @@ public class SQLite {
                                    rs.getString("username"),
                                    rs.getString("password"),
                                    rs.getInt("role"),
-                                   rs.getInt("locked")));
+                                   rs.getInt("locked"),
+                                   rs.getInt("attempts")));
             }
         } catch (Exception ex) {}
         return users;
@@ -316,5 +318,54 @@ public class SQLite {
             System.out.print(ex);
         }
         return product;
+    }
+    
+    public void updateUserPassword(String username, String password) {
+        // TO-DO: Hash password
+        String sql = "UPDATE users SET password=" + password + " WHERE username='" + username + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("User password of " + username + " has been updated.");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
+    public void updateUser(String username, String column, int value) {
+        String sql = "UPDATE users SET " + column + "=" + value + " WHERE username='" + username + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("User " + username + " has been updated. " + column + "=" + value);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
+    public User getUser(String username){
+        String sql = "SELECT id, username, password, role, locked, attempts FROM users WHERE username='" + username + "';";
+        ArrayList<User> users = new ArrayList<User>();
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {
+                users.add(new User(rs.getInt("id"),
+                                   rs.getString("username"),
+                                   rs.getString("password"),
+                                   rs.getInt("role"),
+                                   rs.getInt("locked"),
+                                  rs.getInt("attempts")));
+            }
+        } catch (Exception ex) {}
+        
+        if(users.isEmpty()){
+            return null;
+        }
+        return users.get(0);
     }
 }

@@ -3,6 +3,7 @@ package View;
 
 import Model.User;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Register extends javax.swing.JPanel {
 
@@ -17,10 +18,10 @@ public class Register extends javax.swing.JPanel {
     private void initComponents() {
 
         registerBtn = new javax.swing.JButton();
-        passwordFld = new javax.swing.JPasswordField();
+        passwordFld = new javax.swing.JTextField();
         usernameFld = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        confpassFld = new javax.swing.JPasswordField();
+        confpassFld = new javax.swing.JTextField();
         backBtn = new javax.swing.JButton();
         errorMsg = new javax.swing.JLabel();
         errorMsg1 = new javax.swing.JLabel();
@@ -63,6 +64,11 @@ public class Register extends javax.swing.JPanel {
         confpassFld.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         confpassFld.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         confpassFld.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "CONFIRM PASSWORD", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+        confpassFld.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                confpassFldKeyReleased(evt);
+            }
+        });
 
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         backBtn.setText("<Back");
@@ -138,11 +144,57 @@ public class Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        frame.registerAction(usernameFld.getText(), passwordFld.getText(), confpassFld.getText());
-        frame.loginNav();
+        
+        boolean passMatch = false;
+        boolean usernameValid = false;
+        boolean passValid = false;
+        
+        if(passwordFld.getText().equals(confpassFld.getText())){
+            passMatch = true;
+        }
+        
+        if(frame.main.sqlite.getUser(usernameFld.getText()) == null){
+            usernameValid = true;
+        }
+        
+        if(passwordFld.getText().length() > 7){
+            passValid = true;
+        }
+        
+        if(!usernameValid){
+            JOptionPane.showMessageDialog(frame,
+                    "Username already exists.",
+                     "Registration Error",
+                 JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!passValid){
+            JOptionPane.showMessageDialog(frame,
+                    "Password must be atleast 8 characters.",
+                     "Registration Error",
+                 JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!passMatch){
+            JOptionPane.showMessageDialog(frame,
+                    "Confirm password does not match password.",
+                     "Registration Error",
+                 JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            frame.registerAction(usernameFld.getText(), passwordFld.getText(), confpassFld.getText());
+            usernameFld.setText("");
+            passwordFld.setText("");
+            confpassFld.setText("");
+            frame.loginNav();
+        }
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        usernameFld.setText("");
+        passwordFld.setText("");
+        confpassFld.setText("");
+        errorMsg.setText("");
+        errorMsg1.setText("");
+        errorMsg2.setText("");
         frame.loginNav();
     }//GEN-LAST:event_backBtnActionPerformed
 
@@ -169,18 +221,70 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameFldKeyReleased
 
     private void passwordFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFldKeyReleased
-        String password = String.valueOf(passwordFld.getPassword());
+        String password = String.valueOf(passwordFld.getText());
+        String puncs = ",./<>?;:'[]{}|-=_+!@#$%^&*()";
+        int strength = 0;
+        int uppercase = 0;
+        int digit = 0;
+        int punctuation = 0;
+        
+        for(int i=0 ; i < password.length() ; i++){
+            if(Character.isDigit(password.charAt(i))){
+                digit = 1;
+            }
+            if(Character.isUpperCase(password.charAt(i))){
+                uppercase = 1;
+            }
+            if(puncs.contains("" + password.charAt(i))){
+                punctuation = 1;
+            }
+        }
+        strength = uppercase + digit + punctuation;
+        if(password.length() < 8){
+            errorMsg1.setText("Password must be atleast 8 characters.");
+            errorMsg1.setForeground(new java.awt.Color(255, 0, 0));
+        }
+        else if(strength < 2){
+            errorMsg1.setText("Password Strength: Weak");
+            errorMsg1.setForeground(new java.awt.Color(255, 0, 0));
+        }
+        else if(strength == 2){
+            errorMsg1.setText("Password Strength: Moderate");
+            errorMsg1.setForeground(new java.awt.Color(201, 184, 28));
+        }
+        else if(strength > 2){
+            errorMsg1.setText("Password Strength: Strong");
+            errorMsg1.setForeground(new java.awt.Color(28, 184, 0));
+        }
+        else{
+            errorMsg1.setText("");
+            errorMsg1.setForeground(new java.awt.Color(255, 0, 0));
+        }
     }//GEN-LAST:event_passwordFldKeyReleased
+
+    private void confpassFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confpassFldKeyReleased
+        String password = passwordFld.getText();
+        String confpass = confpassFld.getText();
+        
+        if(password.equals(confpass)){
+            errorMsg2.setText("Password match.");
+            errorMsg2.setForeground(new java.awt.Color(28, 184, 0));
+        }
+        else{
+            errorMsg2.setText("Password does not match.");
+            errorMsg2.setForeground(new java.awt.Color(255, 0, 0));
+        }
+    }//GEN-LAST:event_confpassFldKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
-    private javax.swing.JPasswordField confpassFld;
+    private javax.swing.JTextField confpassFld;
     private javax.swing.JLabel errorMsg;
     private javax.swing.JLabel errorMsg1;
     private javax.swing.JLabel errorMsg2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPasswordField passwordFld;
+    private javax.swing.JTextField passwordFld;
     private javax.swing.JButton registerBtn;
     private javax.swing.JTextField usernameFld;
     // End of variables declaration//GEN-END:variables

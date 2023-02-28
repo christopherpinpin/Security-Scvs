@@ -100,43 +100,45 @@ public class Login extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        ArrayList<User> users = frame.main.sqlite.getUsers();
-        int[] att = new int[users.size()];
-        for(int i=0 ; i < att.length; i++){
-            att[i] = 0;
-        }
-        int userIndex = -1;
         String username = usernameFld.getText();
         String password = String.valueOf(passwordFld.getPassword());
         
-        for(int nCtr = 0; nCtr < users.size(); nCtr++){
-            if (username.equals(users.get(nCtr).getUsername())){
-                userIndex = nCtr;
-            }
-            System.out.println("===== User " + users.get(nCtr).getId() + " =====");
-            System.out.println(" Username: " + users.get(nCtr).getUsername());
-            System.out.println(" Password: " + users.get(nCtr).getPassword());
-            System.out.println(" Role: " + users.get(nCtr).getRole());
-            System.out.println(" Locked: " + users.get(nCtr).getLocked());
-        }
+        User user = frame.main.sqlite.getUser(username);
         
         if(username.equals("") && password.equals("")){
             errorMsg.setText("Enter valid login credentials.");
         }
-        else if(userIndex == -1){
+        else if(user == null){
             errorMsg.setText("Username does not exist.");
             passwordFld.setText("");
         }
-        else if(!password.equals(users.get(userIndex).getPassword())){
-            att[userIndex]++;
-            errorMsg.setText("Password is incorrect. You have " + (5 - att[userIndex]) + " attempts left before account lockout.");
-            passwordFld.setText("");
+        else if(!password.equals(user.getPassword())){
+            
+            if(user.getAttempts() < 4){
+                frame.main.sqlite.updateUser(username, "attempts", user.getAttempts() + 1);
+                user.setAttempts(user.getAttempts() + 1);
+                errorMsg.setText("Password is incorrect. You have " + (5 - user.getAttempts()) + " attempts left before account lockout.");
+                passwordFld.setText("");
+            }
+            else{
+                frame.main.sqlite.updateUser(username, "locked", 1);
+                errorMsg.setText("Account locked.");
+                passwordFld.setText("");
+            }
         }
         else{
-            usernameFld.setText("");
-            passwordFld.setText("");
-            errorMsg.setText("");
-            frame.mainNav();
+            if(user.getLocked() == 1){
+                errorMsg.setText("Account locked.");
+                passwordFld.setText("");
+            }
+            else{
+                usernameFld.setText("");
+                passwordFld.setText("");
+                errorMsg.setText("");
+                frame.main.sqlite.updateUser(username, "attempts", 0);
+                frame.mainNav();
+            }
+            
         }
         
     }//GEN-LAST:event_loginBtnActionPerformed
