@@ -18,10 +18,10 @@ public class Register extends javax.swing.JPanel {
     private void initComponents() {
 
         registerBtn = new javax.swing.JButton();
-        passwordFld = new javax.swing.JTextField();
+        passwordFld = new javax.swing.JPasswordField();
         usernameFld = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        confpassFld = new javax.swing.JTextField();
+        confpassFld = new javax.swing.JPasswordField();
         backBtn = new javax.swing.JButton();
         errorMsg = new javax.swing.JLabel();
         errorMsg1 = new javax.swing.JLabel();
@@ -157,7 +157,7 @@ public class Register extends javax.swing.JPanel {
             usernameValid = true;
         }
         
-        if(passwordFld.getText().length() > 7){
+        if(String.valueOf(passwordFld.getPassword()).length() > 7){
             passValid = true;
         }
         
@@ -180,8 +180,8 @@ public class Register extends javax.swing.JPanel {
                  JOptionPane.ERROR_MESSAGE);
         }
         else{
-            String password = frame.main.hashPassword(passwordFld.getText());
-            frame.registerAction(usernameFld.getText().toLowerCase(), password, confpassFld.getText());
+            String password = frame.main.hashPassword(String.valueOf(passwordFld.getPassword()));
+            frame.registerAction(usernameFld.getText().toLowerCase(), password, String.valueOf(confpassFld.getPassword()));
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");
@@ -225,7 +225,7 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameFldKeyReleased
 
     private void passwordFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFldKeyReleased
-        String password = String.valueOf(passwordFld.getText());
+        String password = String.valueOf(passwordFld.getPassword());
         String puncs = ",./<>?;:'[]{}|-=_+!@#$%^&*()";
         int strength = 0;
         int uppercase = 0;
@@ -267,8 +267,8 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_passwordFldKeyReleased
 
     private void confpassFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confpassFldKeyReleased
-        String password = passwordFld.getText();
-        String confpass = confpassFld.getText();
+        String password = String.valueOf(passwordFld.getPassword());
+        String confpass = String.valueOf(confpassFld.getPassword());
         
         if(password.equals(confpass)){
             errorMsg2.setText("Password match.");
@@ -283,12 +283,12 @@ public class Register extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
-    private javax.swing.JTextField confpassFld;
+    private javax.swing.JPasswordField confpassFld;
     private javax.swing.JLabel errorMsg;
     private javax.swing.JLabel errorMsg1;
     private javax.swing.JLabel errorMsg2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField passwordFld;
+    private javax.swing.JPasswordField passwordFld;
     private javax.swing.JButton registerBtn;
     private javax.swing.JTextField usernameFld;
     // End of variables declaration//GEN-END:variables
