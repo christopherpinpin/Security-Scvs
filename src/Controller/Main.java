@@ -53,7 +53,7 @@ public class Main {
             SecretKey key = skf.generateSecret( spec );
             byte[] res = key.getEncoded( );
             String hashed = bytesToHex(res);
-            System.out.println("Hashed: " + hashed);
+//            System.out.println("Hashed: " + hashed);
             return hashed;
         } catch ( NoSuchAlgorithmException | InvalidKeySpecException e ) {
             throw new RuntimeException( e );
@@ -131,17 +131,17 @@ public class Main {
 //            System.out.println(" Price: " + products.get(nCtr).getPrice());
 //        }
         // Get users
-        ArrayList<User> users = sqlite.getUsers();
-        for(int nCtr = 0; nCtr < users.size(); nCtr++){
-            System.out.println("===== User " + users.get(nCtr).getId() + " =====");
-            System.out.println(" Username: " + users.get(nCtr).getUsername());
-            System.out.println(" Password: " + users.get(nCtr).getPassword());
-            System.out.println(" Role: " + users.get(nCtr).getRole());
-            System.out.println(" Locked: " + users.get(nCtr).getLocked());
-            System.out.println(" Attempts: " + users.get(nCtr).getAttempts());
-            System.out.println(" SecQ1: " + users.get(nCtr).getSecQ1());
-            System.out.println(" SecQ2: " + users.get(nCtr).getSecQ2());
-        }
+//        ArrayList<User> users = sqlite.getUsers();
+//        for(int nCtr = 0; nCtr < users.size(); nCtr++){
+//            System.out.println("===== User " + users.get(nCtr).getId() + " =====");
+//            System.out.println(" Username: " + users.get(nCtr).getUsername());
+//            System.out.println(" Password: " + users.get(nCtr).getPassword());
+//            System.out.println(" Role: " + users.get(nCtr).getRole());
+//            System.out.println(" Locked: " + users.get(nCtr).getLocked());
+//            System.out.println(" Attempts: " + users.get(nCtr).getAttempts());
+//            System.out.println(" SecQ1: " + users.get(nCtr).getSecQ1());
+//            System.out.println(" SecQ2: " + users.get(nCtr).getSecQ2());
+//        }
 //        sqlite.updateUser("client3", "locked", 0);
         // Initialize User Interface
         Frame frame = new Frame();
