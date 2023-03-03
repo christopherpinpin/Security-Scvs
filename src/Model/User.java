@@ -7,19 +7,23 @@ public class User {
     private int role = 2;
     private int locked = 0;
     private int attempts = 0;
+    private String secQ1;
+    private String secQ2;
 
     public User(String username, String password){
         this.username = username;
         this.password = password;
     }
     
-    public User(int id, String username, String password, int role, int locked, int attempts){
+    public User(int id, String username, String password, int role, int locked, int attempts, String secQ1, String secQ2){
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
         this.locked = locked;
         this.attempts = attempts;
+        this.secQ1 = secQ1;
+        this.secQ2 = secQ2;
     }
     
     public int getId() {
@@ -67,5 +71,21 @@ public class User {
     }
     public void setAttempts(int attempts) {
         this.attempts = attempts;
+    }
+    
+    public String getSecQ1(){
+        return this.secQ1;
+    }
+    
+    public void setSecQ1(String secQ1){
+        this.secQ1 = secQ1;
+    }
+    
+    public String getSecQ2(){
+        return this.secQ2;
+    }
+    
+    public void setSecQ2(String secQ2){
+        this.secQ2 = secQ2;
     }
 }

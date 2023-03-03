@@ -87,7 +87,9 @@ public class SQLite {
             + " password TEXT NOT NULL,\n"
             + " role INTEGER DEFAULT 2,\n"
             + " locked INTEGER DEFAULT 0,\n"
-            + " attempts INTEGER DEFAULT 0\n"
+            + " attempts INTEGER DEFAULT 0,\n"
+            + " secQ1 TEXT NOT NULL,\n"
+            + " secQ2 TEXT NOT NULL\n"
             + ");";
 
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -262,7 +264,7 @@ public class SQLite {
     }
     
     public ArrayList<User> getUsers(){
-        String sql = "SELECT id, username, password, role, locked, attempts FROM users";
+        String sql = "SELECT id, username, password, role, locked, attempts, secQ1, secQ2 FROM users";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -275,7 +277,9 @@ public class SQLite {
                                    rs.getString("password"),
                                    rs.getInt("role"),
                                    rs.getInt("locked"),
-                                   rs.getInt("attempts")));
+                                   rs.getInt("attempts"),
+                                   rs.getString("secQ1"),
+                                        rs.getString("secQ2")));
             }
         } catch (Exception ex) {}
         return users;
@@ -283,6 +287,18 @@ public class SQLite {
     
     public void addUser(String username, String password, int role) {
         String sql = "INSERT INTO users(username,password,role) VALUES('" + username + "','" + password + "','" + role + "')";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()){
+            stmt.execute(sql);
+            
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
+    public void addUser(String username, String password, int role, String secQ1, String secQ2) {
+        String sql = "INSERT INTO users(username,password,role,secQ1,secQ2) VALUES('" + username + "','" + password + "','" + role + "','" + secQ1 + "','" + secQ2 + "')";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()){
@@ -321,8 +337,7 @@ public class SQLite {
     }
     
     public void updateUserPassword(String username, String password) {
-        // TO-DO: Hash password
-        String sql = "UPDATE users SET password=" + password + " WHERE username='" + username + "';";
+        String sql = "UPDATE users SET password='" + password + "' WHERE username='" + username + "';";
 
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
@@ -346,7 +361,7 @@ public class SQLite {
     }
     
     public User getUser(String username){
-        String sql = "SELECT id, username, password, role, locked, attempts FROM users WHERE username='" + username + "';";
+        String sql = "SELECT id, username, password, role, locked, attempts, secQ1, secQ2 FROM users WHERE username='" + username + "';";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -359,7 +374,9 @@ public class SQLite {
                                    rs.getString("password"),
                                    rs.getInt("role"),
                                    rs.getInt("locked"),
-                                  rs.getInt("attempts")));
+                                  rs.getInt("attempts"),
+                                   rs.getString("secQ1"),
+                                        rs.getString("secQ2")));
             }
         } catch (Exception ex) {}
         

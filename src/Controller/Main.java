@@ -95,11 +95,11 @@ public class Main {
 //        sqlite.addProduct("Scanner", 10, 100.0);
 //
 //        // Add sample users
-//        sqlite.addUser("admin", hashPassword("qwerty1234") , 5);
-//        sqlite.addUser("manager", hashPassword("qwerty1234"), 4);
-//        sqlite.addUser("staff", hashPassword("qwerty1234"), 3);
-//        sqlite.addUser("client1", hashPassword("qwerty1234"), 2);
-//        sqlite.addUser("client2", hashPassword("qwerty1234"), 2);
+//        sqlite.addUser("admin", hashPassword("qwerty1234") , 5, hashPassword("qwerty1234"), hashPassword("qwerty1234"));
+//        sqlite.addUser("manager", hashPassword("qwerty1234"), 4, hashPassword("qwerty1234"), hashPassword("qwerty1234"));
+//        sqlite.addUser("staff", hashPassword("qwerty1234"), 3, hashPassword("qwerty1234"), hashPassword("qwerty1234"));
+//        sqlite.addUser("client1", hashPassword("qwerty1234"), 2, hashPassword("qwerty1234"), hashPassword("qwerty1234"));
+//        sqlite.addUser("client2", hashPassword("qwerty1234"), 2, hashPassword("qwerty1234"), hashPassword("qwerty1234"));
 //        
 //        
 //        // Get users
@@ -139,6 +139,8 @@ public class Main {
             System.out.println(" Role: " + users.get(nCtr).getRole());
             System.out.println(" Locked: " + users.get(nCtr).getLocked());
             System.out.println(" Attempts: " + users.get(nCtr).getAttempts());
+            System.out.println(" SecQ1: " + users.get(nCtr).getSecQ1());
+            System.out.println(" SecQ2: " + users.get(nCtr).getSecQ2());
         }
 //        sqlite.updateUser("client3", "locked", 0);
         // Initialize User Interface

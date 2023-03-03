@@ -206,6 +206,8 @@ public class Frame extends javax.swing.JFrame {
     public Main main;
     public Login loginPnl = new Login();
     public Register registerPnl = new Register();
+    public ForgotPass forgotPassPnl = new ForgotPass();
+    public ChangePass changePassPnl = new ChangePass();
     
     private AdminHome adminHomePnl = new AdminHome();
     private ManagerHome managerHomePnl = new ManagerHome();
@@ -223,6 +225,8 @@ public class Frame extends javax.swing.JFrame {
         this.main = controller;
         loginPnl.frame = this;
         registerPnl.frame = this;
+        forgotPassPnl.frame = this;
+        changePassPnl.frame = this;
         
         adminHomePnl.init(main.sqlite);
         clientHomePnl.init(main.sqlite);
@@ -233,6 +237,8 @@ public class Frame extends javax.swing.JFrame {
         Container.add(loginPnl, "loginPnl");
         Container.add(registerPnl, "registerPnl");
         Container.add(HomePnl, "homePnl");
+        Container.add(forgotPassPnl, "forgotPassPnl");
+        Container.add(changePassPnl, "changePassPnl");
         frameView.show(Container, "loginPnl");
         
         Content.setLayout(contentView);
@@ -256,8 +262,16 @@ public class Frame extends javax.swing.JFrame {
         frameView.show(Container, "registerPnl");
     }
     
-    public void registerAction(String username, String password, String confpass){
-        main.sqlite.addUser(username, password);
+    public void registerAction(String username, String password, String confpass, String secQ1, String secQ2){
+        main.sqlite.addUser(username, password, 2, secQ1, secQ2);
+    }
+    
+    public void forgotPassNav(){
+        frameView.show(Container, "forgotPassPnl");
+    }
+    
+    public void changePassNav(){
+        frameView.show(Container, "changePassPnl");
     }
     
 
