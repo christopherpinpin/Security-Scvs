@@ -37,6 +37,7 @@ public class ForgotPass extends javax.swing.JPanel {
         secQ1Fld = new javax.swing.JPasswordField();
         secQ2Fld = new javax.swing.JPasswordField();
         changePassBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -77,12 +78,22 @@ public class ForgotPass extends javax.swing.JPanel {
             }
         });
 
+        backBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        backBtn.setText("<Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(195, 195, 195)
+                .addGap(20, 20, 20)
+                .addComponent(backBtn)
+                .addGap(103, 103, 103)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(secQ2Fld)
                     .addComponent(secQ1Fld)
@@ -96,8 +107,13 @@ public class ForgotPass extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(backBtn)))
                 .addGap(40, 40, 40)
                 .addComponent(usernameFld, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
@@ -139,12 +155,23 @@ public class ForgotPass extends javax.swing.JPanel {
         }
         else{
             frame.changePassPnl.usernameFld.setText(user.getUsername());
+            usernameFld.setText("");
+            secQ1Fld.setText("");
+            secQ2Fld.setText("");
             frame.changePassNav();
         }
     }//GEN-LAST:event_changePassBtnActionPerformed
 
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        usernameFld.setText("");
+        secQ1Fld.setText("");
+        secQ2Fld.setText("");
+        frame.loginNav();
+    }//GEN-LAST:event_backBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton changePassBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField secQ1Fld;

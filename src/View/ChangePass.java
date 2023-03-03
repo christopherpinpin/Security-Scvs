@@ -38,6 +38,7 @@ public class ChangePass extends javax.swing.JPanel {
         changePassBtn = new javax.swing.JButton();
         errorMsg1 = new javax.swing.JLabel();
         errorMsg2 = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -94,12 +95,22 @@ public class ChangePass extends javax.swing.JPanel {
         errorMsg2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         errorMsg2.setToolTipText("");
 
+        backBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        backBtn.setText("<Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(195, 195, 195)
+                .addGap(21, 21, 21)
+                .addComponent(backBtn)
+                .addGap(102, 102, 102)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(confpassFld)
                     .addComponent(passwordFld)
@@ -115,8 +126,13 @@ public class ChangePass extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(backBtn)))
                 .addGap(40, 40, 40)
                 .addComponent(usernameFld, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,6 +226,7 @@ public class ChangePass extends javax.swing.JPanel {
             String password = frame.main.hashPassword(String.valueOf(passwordFld.getPassword()));
             frame.main.sqlite.updateUserPassword(usernameFld.getText(), password);
             frame.main.sqlite.updateUser(usernameFld.getText(), "locked", 0);
+            frame.main.sqlite.updateUser(usernameFld.getText(), "attempts", 0);
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");
@@ -237,8 +254,18 @@ public class ChangePass extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_confpassFldKeyReleased
 
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        usernameFld.setText("");
+        passwordFld.setText("");
+        confpassFld.setText("");
+        errorMsg1.setText("");
+        errorMsg2.setText("");
+        frame.forgotPassNav();
+    }//GEN-LAST:event_backBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton changePassBtn;
     private javax.swing.JPasswordField confpassFld;
     private javax.swing.JLabel errorMsg1;
