@@ -1,12 +1,15 @@
 package View;
 
 import Controller.Main;
+import Model.User;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.WindowConstants;
 
 public class Frame extends javax.swing.JFrame {
+    
+    public User userAuth;
 
     public Frame() {
         initComponents();
@@ -262,21 +265,28 @@ public class Frame extends javax.swing.JFrame {
             case 5:
                 adminHomePnl.showPnl("home");
                 contentView.show(Content, "adminHomePnl");
+                disableAllBtn();
+                adminBtn.setEnabled(true);
                 break;
             case 4:
                 managerHomePnl.showPnl("home");
                 contentView.show(Content, "managerHomePnl");
+                disableAllBtn();
+                managerBtn.setEnabled(true);
                 break;
             case 3:
                 staffHomePnl.showPnl("home");
                 contentView.show(Content, "staffHomePnl");
+                disableAllBtn();
+                staffBtn.setEnabled(true);
                 break;
             default:
                 clientHomePnl.showPnl("home");
                 contentView.show(Content, "clientHomePnl");
+                disableAllBtn();
+                clientBtn.setEnabled(true);
                 break;
         }
-        disableAllBtn();
     }
     
     public void loginNav(){
