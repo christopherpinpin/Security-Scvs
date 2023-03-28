@@ -250,8 +250,33 @@ public class Frame extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public void mainNav(){
+    public void mainNav(int role){
+//      ROLE                CODE
+//      Administrator       5
+//      Manager             4
+//      Staff               3
+//      Client              2
+//      Disabled            1
         frameView.show(Container, "homePnl");
+        switch (role) {
+            case 5:
+                adminHomePnl.showPnl("home");
+                contentView.show(Content, "adminHomePnl");
+                break;
+            case 4:
+                managerHomePnl.showPnl("home");
+                contentView.show(Content, "managerHomePnl");
+                break;
+            case 3:
+                staffHomePnl.showPnl("home");
+                contentView.show(Content, "staffHomePnl");
+                break;
+            default:
+                clientHomePnl.showPnl("home");
+                contentView.show(Content, "clientHomePnl");
+                break;
+        }
+        disableAllBtn();
     }
     
     public void loginNav(){
@@ -272,6 +297,13 @@ public class Frame extends javax.swing.JFrame {
     
     public void changePassNav(){
         frameView.show(Container, "changePassPnl");
+    }
+    
+    public void disableAllBtn(){
+        adminBtn.setEnabled(false);
+        clientBtn.setEnabled(false);
+        managerBtn.setEnabled(false);
+        staffBtn.setEnabled(false);
     }
     
 

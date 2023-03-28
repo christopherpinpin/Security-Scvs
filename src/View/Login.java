@@ -156,7 +156,7 @@ public class Login extends javax.swing.JPanel {
                 passwordFld.setText("");
                 errorMsg.setText("");
                 frame.main.sqlite.updateUser(username, "attempts", 0);
-                frame.mainNav();
+                frame.mainNav(user.getRole());
             }
             
         }

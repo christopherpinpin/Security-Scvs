@@ -59,6 +59,12 @@ public class MgmtProduct extends javax.swing.JPanel {
         component.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), text, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12)));
     }
     
+    public void clientFunctions(){
+        addBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
+        editBtn.setEnabled(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
