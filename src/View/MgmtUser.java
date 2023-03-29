@@ -197,7 +197,7 @@ public class MgmtUser extends javax.swing.JPanel {
                 sqlite.updateUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 
                                    "role", 
                                     Character.getNumericValue(result.charAt(0)));
-                sqlite.addLogs("NOTICE", 
+                sqlite.addLogs("USER", 
                                UserAuth.username, 
                                "User updated " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " role to " + result.charAt(0));
                 init();
@@ -213,7 +213,7 @@ public class MgmtUser extends javax.swing.JPanel {
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
                 sqlite.removeUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
-                sqlite.addLogs("NOTICE", 
+                sqlite.addLogs("USER", 
                                UserAuth.username, 
                                "User removed " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + ".");
                 init();
@@ -242,7 +242,7 @@ public class MgmtUser extends javax.swing.JPanel {
                 sqlite.updateUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 
                                    "attempts", 
                                     0);
-                sqlite.addLogs("NOTICE", 
+                sqlite.addLogs("USER", 
                                UserAuth.username, 
                                "User " + state + "ed " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + ".");
                 init();
@@ -270,7 +270,7 @@ public class MgmtUser extends javax.swing.JPanel {
                     String pass = Main.hashPassword(password.getText());
                     sqlite.updateUserPassword(tableModel.getValueAt(table.getSelectedRow(), 0).toString(),
                                               pass);
-                    sqlite.addLogs("NOTICE", 
+                    sqlite.addLogs("USER", 
                                UserAuth.username, 
                                       "User password of " + tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " successfully changed.");
                     init();

@@ -139,23 +139,27 @@ public class Login extends javax.swing.JPanel {
                 user.setAttempts(user.getAttempts() + 1);
                 errorMsg.setText("Password is incorrect. You have " + (5 - user.getAttempts()) + " attempts left before account lockout.");
                 passwordFld.setText("");
+                frame.main.sqlite.addLogs("NOTICE", user.getUsername(), "Attempted login. " + (5 - user.getAttempts()) + " attempts remaining.");
             }
             else{
                 frame.main.sqlite.updateUser(username, "locked", 1);
                 errorMsg.setText("Account locked.");
                 passwordFld.setText("");
+                frame.main.sqlite.addLogs("NOTICE", user.getUsername(), "Attempted login. User account locked.");
             }
         }
         else{
             if(user.getLocked() == 1){
                 errorMsg.setText("Account locked.");
                 passwordFld.setText("");
+                frame.main.sqlite.addLogs("NOTICE", user.getUsername(), "Attempted login. User account locked.");
             }
             else{
                 usernameFld.setText("");
                 passwordFld.setText("");
                 errorMsg.setText("");
                 frame.main.sqlite.updateUser(username, "attempts", 0);
+                frame.main.sqlite.addLogs("NOTICE", user.getUsername(), "User successfully login.");
                 frame.mainNav(user);
             }
             

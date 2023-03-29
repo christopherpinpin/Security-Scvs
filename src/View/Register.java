@@ -221,6 +221,7 @@ public class Register extends javax.swing.JPanel {
             String secQ1 = frame.main.hashPassword(String.valueOf(secQ1Fld.getPassword()));
             String secQ2 = frame.main.hashPassword(String.valueOf(secQ2Fld.getPassword()));
             frame.registerAction(usernameFld.getText().toLowerCase(), password, String.valueOf(confpassFld.getPassword()), secQ1, secQ2);
+            frame.main.sqlite.addLogs("NOTICE", usernameFld.getText(), "User creation successful.");
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");

@@ -150,7 +150,9 @@ public class SQLite {
         }
     }
     
-    public void addHistory(String username, String name, int stock, String timestamp) {
+    public void addHistory(String username, String name, int stock) {
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        String timestamp = ts.toString();
         String sql = "INSERT INTO history(username,name,stock,timestamp) VALUES('" + username + "','" + name + "','" + stock + "','" + timestamp + "')";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -324,6 +326,18 @@ public class SQLite {
         }
     }
     
+    public void removeProduct(String itemName) {
+        String sql = "DELETE FROM product WHERE name='" + itemName + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Item " + itemName + " has been deleted.");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
     public Product getProduct(String name){
         String sql = "SELECT name, stock, price FROM product WHERE name='" + name + "';";
         Product product = null;
@@ -358,6 +372,30 @@ public class SQLite {
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
             System.out.println("User " + username + " has been updated. " + column + "=" + value);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
+    public void updateProductStock(String itemName, int value) {
+        String sql = "UPDATE product SET stock=" + value + " WHERE name='" + itemName + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println(itemName + " stock has been updated. stock = " + value);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
+    public void updateProduct(String oldName, String newName, int stock, double price) {
+        String sql = "UPDATE product SET name='" + newName + "', stock=" + stock + ", price=" + price + " WHERE name='" + oldName + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println(oldName + " has been updated.");
         } catch (Exception ex) {
             System.out.print(ex);
         }
