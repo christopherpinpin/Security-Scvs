@@ -142,7 +142,7 @@ public class Main {
 //            System.out.println(" SecQ1: " + users.get(nCtr).getSecQ1());
 //            System.out.println(" SecQ2: " + users.get(nCtr).getSecQ2());
 //        }
-//        sqlite.updateUser("client3", "locked", 0);
+//        sqlite.updateUser("client3", "role", 2);
         // Initialize User Interface
         Frame frame = new Frame();
         frame.init(this);

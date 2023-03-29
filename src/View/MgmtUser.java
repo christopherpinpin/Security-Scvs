@@ -7,6 +7,8 @@ package View;
 
 import Controller.SQLite;
 import Model.User;
+import Model.UserAuth;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -191,6 +193,14 @@ public class MgmtUser extends javax.swing.JPanel {
             if(result != null){
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
                 System.out.println(result.charAt(0));
+                sqlite.updateUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 
+                                   "role", 
+                                    Character.getNumericValue(result.charAt(0)));
+                sqlite.addLogs("NOTICE", 
+                               UserAuth.username, 
+                               "User updated " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " role to " + result.charAt(0));
+                init();
+                
             }
         }
     }//GEN-LAST:event_editRoleBtnActionPerformed
@@ -201,6 +211,11 @@ public class MgmtUser extends javax.swing.JPanel {
             
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                sqlite.removeUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                sqlite.addLogs("NOTICE", 
+                               UserAuth.username, 
+                               "User removed " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + ".");
+                init();
             }
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
@@ -216,6 +231,20 @@ public class MgmtUser extends javax.swing.JPanel {
             
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                int newRole = 1;
+                if(state.equals("unlock")){
+                    newRole = 0;
+                }
+                sqlite.updateUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 
+                                   "locked", 
+                                    newRole);
+                sqlite.updateUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString(), 
+                                   "attempts", 
+                                    0);
+                sqlite.addLogs("NOTICE", 
+                               UserAuth.username, 
+                               "User " + state + "ed " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + ".");
+                init();
             }
         }
     }//GEN-LAST:event_lockBtnActionPerformed

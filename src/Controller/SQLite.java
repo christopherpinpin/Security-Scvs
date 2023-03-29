@@ -9,6 +9,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class SQLite {
@@ -160,7 +161,9 @@ public class SQLite {
         }
     }
     
-    public void addLogs(String event, String username, String desc, String timestamp) {
+    public void addLogs(String event, String username, String desc) {
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        String timestamp = ts.toString();
         String sql = "INSERT INTO logs(event,username,desc,timestamp) VALUES('" + event + "','" + username + "','" + desc + "','" + timestamp + "')";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
