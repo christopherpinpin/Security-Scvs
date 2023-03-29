@@ -251,11 +251,11 @@ public class MgmtProduct extends javax.swing.JPanel {
             double itemPrice = Double.parseDouble(priceFld.getText());
             if(sqlite.getProduct(itemName) == null && !itemName.equals("") && itemStock > 0 && itemPrice > 0){
                 sqlite.addProduct(itemName, itemStock, itemPrice);
-                sqlite.addLogs("PRODUCT", UserAuth.username, "User added product" + itemName + "with a stock of " + itemName);
+                sqlite.addLogs("PRODUCT", UserAuth.username, "User added product " + itemName + " with a stock of " + itemStock);
                 init();
             }
             else{
-                sqlite.addLogs("PRODUCT", UserAuth.username, "User unsuccessfully added  product " + itemName + ". Product already exists.");
+                sqlite.addLogs("PRODUCT", UserAuth.username, "User unsuccessfully added product " + itemName + ". Product already exists.");
                 System.out.println("Product already exists.");
             }
         }
@@ -310,6 +310,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
                 sqlite.removeProduct(itemName);
                 sqlite.addLogs("PRODUCT", UserAuth.username, "User sucessfully deleted product " + itemName);
+                init();
             }
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
