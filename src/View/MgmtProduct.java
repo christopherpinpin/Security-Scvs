@@ -71,6 +71,10 @@ public class MgmtProduct extends javax.swing.JPanel {
         purchaseBtn.setVisible(false);
     }
     
+    public void managerFunctions(){
+        purchaseBtn.setVisible(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -98,6 +98,9 @@ public class MgmtHistory extends javax.swing.JPanel {
         getPurchaseHistorybyUsername(UserAuth.username);
     }
     
+    public void managerFunctions(){
+        getAllPurchaseHistory();
+    }
     
     public void designer(JTextField component, String text){
         component.setSize(70, 600);

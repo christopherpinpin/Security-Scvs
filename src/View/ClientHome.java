@@ -51,8 +51,6 @@ public class ClientHome extends javax.swing.JPanel {
         usersBtn.setVisible(false);
 //        productsBtn.setVisible(false);
         logsBtn.setVisible(false);
-        mgmtProduct.clientFunctions();
-        mgmtHistory.clientFunctions();
     }
     
     public void showPnl(String panelName){
@@ -169,6 +167,7 @@ public class ClientHome extends javax.swing.JPanel {
 
     private void productsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsBtnActionPerformed
         mgmtProduct.init();
+        mgmtProduct.clientFunctions();
         usersBtn.setForeground(Color.black);
         productsBtn.setForeground(Color.red);
         historyBtn.setForeground(Color.black);
@@ -178,6 +177,7 @@ public class ClientHome extends javax.swing.JPanel {
 
     private void historyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBtnActionPerformed
         mgmtHistory.init();
+        mgmtHistory.clientFunctions();
         usersBtn.setForeground(Color.black);
         productsBtn.setForeground(Color.black);
         historyBtn.setForeground(Color.red);
