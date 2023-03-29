@@ -23,7 +23,6 @@ public class MgmtHistory extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
-    public User userAuth;
     
     public MgmtHistory(SQLite sqlite) {
         initComponents();
@@ -63,11 +62,11 @@ public class MgmtHistory extends javax.swing.JPanel {
 //        }
     }
     
-    public void clientFunctions(){
+    public void getPurchaseHistorybyUsername(String username){
         ArrayList<History> history = sqlite.getHistory();
         for(int nCtr = 0; nCtr < history.size(); nCtr++){
             Product product = sqlite.getProduct(history.get(nCtr).getName());
-            if(history.get(nCtr).getName().equals(UserAuth.username)){
+            if(history.get(nCtr).getName().equals(username)){
                 tableModel.addRow(new Object[]{
                 history.get(nCtr).getUsername(),
                 history.get(nCtr).getName(), 
@@ -79,6 +78,26 @@ public class MgmtHistory extends javax.swing.JPanel {
             }
         }
     }
+    
+    public void getAllPurchaseHistory(){
+        ArrayList<History> history = sqlite.getHistory();
+        for(int nCtr = 0; nCtr < history.size(); nCtr++){
+            Product product = sqlite.getProduct(history.get(nCtr).getName());
+            tableModel.addRow(new Object[]{
+                history.get(nCtr).getUsername(), 
+                history.get(nCtr).getName(), 
+                history.get(nCtr).getStock(), 
+                product.getPrice(), 
+                product.getPrice() * history.get(nCtr).getStock(), 
+                history.get(nCtr).getTimestamp()
+            });
+        }
+    }
+    
+    public void clientFunctions(){
+        getPurchaseHistorybyUsername(UserAuth.username);
+    }
+    
     
     public void designer(JTextField component, String text){
         component.setSize(70, 600);

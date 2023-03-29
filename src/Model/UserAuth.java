@@ -9,7 +9,7 @@ package Model;
  * @author Gigabyte
  */
 public class UserAuth {
-    public static String username;
-    public static int role;
+    public static String username = "";
+    public static int role = 0;
     
 }

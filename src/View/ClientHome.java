@@ -174,7 +174,6 @@ public class ClientHome extends javax.swing.JPanel {
         historyBtn.setForeground(Color.black);
         logsBtn.setForeground(Color.black);
         contentView.show(Content, "mgmtProduct");
-        mgmtProduct.userAuth = this.userAuth;
     }//GEN-LAST:event_productsBtnActionPerformed
 
     private void historyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBtnActionPerformed
@@ -184,7 +183,6 @@ public class ClientHome extends javax.swing.JPanel {
         historyBtn.setForeground(Color.red);
         logsBtn.setForeground(Color.black);
         contentView.show(Content, "mgmtHistory");
-        mgmtHistory.userAuth = this.userAuth;
     }//GEN-LAST:event_historyBtnActionPerformed
 
     private void logsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logsBtnActionPerformed

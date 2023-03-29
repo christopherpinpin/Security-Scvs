@@ -23,7 +23,6 @@ public class MgmtProduct extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
-    public User userAuth;
     
     public MgmtProduct(SQLite sqlite) {
         initComponents();
@@ -66,6 +65,10 @@ public class MgmtProduct extends javax.swing.JPanel {
         addBtn.setVisible(false);
         deleteBtn.setVisible(false);
         editBtn.setVisible(false);
+    }
+    
+    public void staffFunctions(){
+        purchaseBtn.setVisible(false);
     }
     
     /**

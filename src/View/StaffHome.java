@@ -50,6 +50,7 @@ public class StaffHome extends javax.swing.JPanel {
         usersBtn.setVisible(false);
 //        productsBtn.setVisible(false);
         logsBtn.setVisible(false);
+        mgmtProduct.staffFunctions();
     }
     
     public void showPnl(String panelName){
