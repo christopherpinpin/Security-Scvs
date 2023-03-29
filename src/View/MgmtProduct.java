@@ -249,7 +249,7 @@ public class MgmtProduct extends javax.swing.JPanel {
             String itemName = nameFld.getText();
             int itemStock = Integer.parseInt(stockFld.getText());
             double itemPrice = Double.parseDouble(priceFld.getText());
-            if(sqlite.getProduct(itemName) == null && !itemName.equals("")){
+            if(sqlite.getProduct(itemName) == null && !itemName.equals("") && itemStock > 0 && itemPrice > 0){
                 sqlite.addProduct(itemName, itemStock, itemPrice);
                 sqlite.addLogs("PRODUCT", UserAuth.username, "User added product" + itemName + "with a stock of " + itemName);
                 init();
@@ -288,9 +288,16 @@ public class MgmtProduct extends javax.swing.JPanel {
                 int newStock = Integer.parseInt(stockFld.getText());
                 double newPrice = Double.parseDouble(priceFld.getText());
                 
-                sqlite.updateProduct(oldName, newName, newStock, newPrice);
-                sqlite.addLogs("PRODUCT", UserAuth.username, "User successfully edited product " + oldName);
-                init();
+                if(newStock > 0 && newPrice > 0){
+                    sqlite.updateProduct(oldName, newName, newStock, newPrice);
+                    sqlite.addLogs("PRODUCT", UserAuth.username, "User successfully edited product " + oldName);
+                    init();
+                }
+                else{
+                    sqlite.addLogs("PRODUCT", UserAuth.username, "User unsuccessfully edited  product " + oldName);
+                    System.out.println("Edit unsuccessful.");
+                }
+                
             }
         }
     }//GEN-LAST:event_editBtnActionPerformed
