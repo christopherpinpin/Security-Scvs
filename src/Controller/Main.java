@@ -41,7 +41,7 @@ public class Main {
         return new String(hexChars);
     }
     
-    public String hashPassword( String passwordStr ) {
+    public static String hashPassword( String passwordStr ) {
         String saltStr = "1234";
         int iterations = 10000;
         int keyLength = 512;

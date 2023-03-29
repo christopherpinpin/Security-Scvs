@@ -6,6 +6,7 @@
 package View;
 
 import Controller.SQLite;
+import Controller.Main;
 import Model.User;
 import Model.UserAuth;
 import java.sql.Timestamp;
@@ -265,6 +266,19 @@ public class MgmtUser extends javax.swing.JPanel {
             if (result == JOptionPane.OK_OPTION) {
                 System.out.println(password.getText());
                 System.out.println(confpass.getText());
+                if(password.getText().equals(confpass.getText())){
+                    String pass = Main.hashPassword(password.getText());
+                    sqlite.updateUserPassword(tableModel.getValueAt(table.getSelectedRow(), 0).toString(),
+                                              pass);
+                    sqlite.addLogs("NOTICE", 
+                               UserAuth.username, 
+                                      "User password of " + tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " successfully changed.");
+                    init();
+                }
+                else{
+                    System.out.println("Passwords do not match. Change password unsuccessful.");
+                }
+                
             }
         }
     }//GEN-LAST:event_chgpassBtnActionPerformed
