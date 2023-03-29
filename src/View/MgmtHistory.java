@@ -8,6 +8,8 @@ package View;
 import Controller.SQLite;
 import Model.History;
 import Model.Product;
+import Model.User;
+import Model.UserAuth;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -21,6 +23,7 @@ public class MgmtHistory extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    public User userAuth;
     
     public MgmtHistory(SQLite sqlite) {
         initComponents();
@@ -46,17 +49,34 @@ public class MgmtHistory extends javax.swing.JPanel {
         }
         
 //      LOAD CONTENTS
+//        ArrayList<History> history = sqlite.getHistory();
+//        for(int nCtr = 0; nCtr < history.size(); nCtr++){
+//            Product product = sqlite.getProduct(history.get(nCtr).getName());
+//            tableModel.addRow(new Object[]{
+//                history.get(nCtr).getUsername(), 
+//                history.get(nCtr).getName(), 
+//                history.get(nCtr).getStock(), 
+//                product.getPrice(), 
+//                product.getPrice() * history.get(nCtr).getStock(), 
+//                history.get(nCtr).getTimestamp()
+//            });
+//        }
+    }
+    
+    public void clientFunctions(){
         ArrayList<History> history = sqlite.getHistory();
         for(int nCtr = 0; nCtr < history.size(); nCtr++){
             Product product = sqlite.getProduct(history.get(nCtr).getName());
-            tableModel.addRow(new Object[]{
-                history.get(nCtr).getUsername(), 
+            if(history.get(nCtr).getName().equals(UserAuth.username)){
+                tableModel.addRow(new Object[]{
+                history.get(nCtr).getUsername(),
                 history.get(nCtr).getName(), 
                 history.get(nCtr).getStock(), 
                 product.getPrice(), 
                 product.getPrice() * history.get(nCtr).getStock(), 
                 history.get(nCtr).getTimestamp()
             });
+            }
         }
     }
     

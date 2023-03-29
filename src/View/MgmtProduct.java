@@ -8,6 +8,7 @@ package View;
 import Controller.SQLite;
 import Model.Product;
 import Model.User;
+import Model.UserAuth;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -196,7 +197,7 @@ public class MgmtProduct extends javax.swing.JPanel {
             if (result == JOptionPane.OK_OPTION) {
                 System.out.println(stockFld.getText());
                 System.out.println("Purchased: " + itemName);
-                System.out.println("User: " + userAuth.getUsername());
+                System.out.println("User: " + UserAuth.username);
             }
         }
     }//GEN-LAST:event_purchaseBtnActionPerformed

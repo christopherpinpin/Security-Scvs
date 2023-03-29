@@ -2,6 +2,7 @@ package View;
 
 import Controller.Main;
 import Model.User;
+import Model.UserAuth;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -261,6 +262,8 @@ public class Frame extends javax.swing.JFrame {
 //      Client              2
 //      Disabled            1
         frameView.show(Container, "homePnl");
+        UserAuth.username = user.getUsername();
+        UserAuth.role = user.getRole();
         switch (user.getRole()) {
             case 5:
                 adminHomePnl.showPnl("home");
@@ -285,7 +288,6 @@ public class Frame extends javax.swing.JFrame {
                 contentView.show(Content, "clientHomePnl");
                 disableAllBtn();
                 clientBtn.setEnabled(true);
-                clientHomePnl.userAuth = user;
                 break;
         }
     }
