@@ -7,6 +7,7 @@ package View;
 
 import Controller.SQLite;
 import Model.Product;
+import Model.User;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ public class MgmtProduct extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    public User userAuth;
     
     public MgmtProduct(SQLite sqlite) {
         initComponents();
@@ -60,9 +62,9 @@ public class MgmtProduct extends javax.swing.JPanel {
     }
     
     public void clientFunctions(){
-        addBtn.setEnabled(false);
-        deleteBtn.setEnabled(false);
-        editBtn.setEnabled(false);
+        addBtn.setVisible(false);
+        deleteBtn.setVisible(false);
+        editBtn.setVisible(false);
     }
     
     /**
@@ -189,9 +191,12 @@ public class MgmtProduct extends javax.swing.JPanel {
             };
 
             int result = JOptionPane.showConfirmDialog(null, message, "PURCHASE PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
-
+            
+            Object itemName = tableModel.getValueAt(table.getSelectedRow(), 0);
             if (result == JOptionPane.OK_OPTION) {
                 System.out.println(stockFld.getText());
+                System.out.println("Purchased: " + itemName);
+                System.out.println("User: " + userAuth.getUsername());
             }
         }
     }//GEN-LAST:event_purchaseBtnActionPerformed

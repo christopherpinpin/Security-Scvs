@@ -253,7 +253,7 @@ public class Frame extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public void mainNav(int role){
+    public void mainNav(User user){
 //      ROLE                CODE
 //      Administrator       5
 //      Manager             4
@@ -261,7 +261,7 @@ public class Frame extends javax.swing.JFrame {
 //      Client              2
 //      Disabled            1
         frameView.show(Container, "homePnl");
-        switch (role) {
+        switch (user.getRole()) {
             case 5:
                 adminHomePnl.showPnl("home");
                 contentView.show(Content, "adminHomePnl");
@@ -285,6 +285,7 @@ public class Frame extends javax.swing.JFrame {
                 contentView.show(Content, "clientHomePnl");
                 disableAllBtn();
                 clientBtn.setEnabled(true);
+                clientHomePnl.userAuth = user;
                 break;
         }
     }
