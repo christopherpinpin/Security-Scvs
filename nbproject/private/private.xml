@@ -5,11 +5,10 @@
         <group>
             <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/Controller/Main.java</file>
             <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/MgmtHistory.java</file>
-            <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/ClientHome.java</file>
-            <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/Login.java</file>
+            <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/MgmtUser.java</file>
             <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/MgmtProduct.java</file>
+            <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/Register.java</file>
             <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/Home.java</file>
-            <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/View/Frame.java</file>
             <file>file:/D:/Documents/AY2223/TERM%202/SECDV/CS1/Security-Scvs/src/Controller/SQLite.java</file>
         </group>
     </open-files>
