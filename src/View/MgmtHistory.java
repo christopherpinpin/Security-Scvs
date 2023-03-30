@@ -201,7 +201,7 @@ public class MgmtHistory extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        JTextField searchFld = new JTextField("0");
+        JTextField searchFld = new JTextField("");
         designer(searchFld, "SEARCH USERNAME OR PRODUCT");
 
         Object[] message = {
@@ -219,27 +219,47 @@ public class MgmtHistory extends javax.swing.JPanel {
 //          LOAD CONTENTS
             ArrayList<History> history = sqlite.getHistory();
             for(int nCtr = 0; nCtr < history.size(); nCtr++){
-                if(searchFld.getText().contains(history.get(nCtr).getUsername()) || 
-                   history.get(nCtr).getUsername().contains(searchFld.getText()) || 
-                   searchFld.getText().contains(history.get(nCtr).getName()) || 
-                   history.get(nCtr).getName().contains(searchFld.getText())){
+                if(searchFld.getText().toLowerCase().contains(history.get(nCtr).getUsername().toLowerCase()) || 
+                   history.get(nCtr).getUsername().toLowerCase().contains(searchFld.getText().toLowerCase()) || 
+                   searchFld.getText().toLowerCase().contains(history.get(nCtr).getName().toLowerCase()) || 
+                   history.get(nCtr).getName().toLowerCase().contains(searchFld.getText().toLowerCase())){
                 
                     Product product = sqlite.getProduct(history.get(nCtr).getName());
-                    tableModel.addRow(new Object[]{
+                    if(UserAuth.role == 2 && history.get(nCtr).getUsername().equals(UserAuth.username)){
+                        tableModel.addRow(new Object[]{
                         history.get(nCtr).getUsername(), 
                         history.get(nCtr).getName(), 
                         history.get(nCtr).getStock(), 
                         product.getPrice(), 
                         product.getPrice() * history.get(nCtr).getStock(), 
                         history.get(nCtr).getTimestamp()
-                    });
+                        });
+                    }
+                    if(UserAuth.role != 2){
+                        tableModel.addRow(new Object[]{
+                        history.get(nCtr).getUsername(), 
+                        history.get(nCtr).getName(), 
+                        history.get(nCtr).getStock(), 
+                        product.getPrice(), 
+                        product.getPrice() * history.get(nCtr).getStock(), 
+                        history.get(nCtr).getTimestamp()
+                        });
+                    }
                 }
             }
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void reloadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadBtnActionPerformed
-        init();
+        if(UserAuth.role == 2){
+            init();
+            clientFunctions();
+        }
+        else{
+            init();
+            managerFunctions();
+        }
+        
     }//GEN-LAST:event_reloadBtnActionPerformed
 
 
