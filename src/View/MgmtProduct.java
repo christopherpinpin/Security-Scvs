@@ -191,7 +191,7 @@ public class MgmtProduct extends javax.swing.JPanel {
 
     private void purchaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchaseBtnActionPerformed
         if(table.getSelectedRow() >= 0){
-            JTextField stockFld = new JTextField("0");
+            JTextField stockFld = new JTextField("1");
             designer(stockFld, "PRODUCT STOCK");
 
             Object[] message = {
@@ -208,7 +208,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                 System.out.println("Purchased: " + itemName);
                 System.out.println("User: " + UserAuth.username);
                 
-                if(itemStock >= userQty && userQty != 0){
+                if(itemStock >= userQty && userQty > 0){
                     sqlite.addHistory(UserAuth.username, itemName, userQty);
                     if(userQty == itemStock){
                         sqlite.removeProduct(itemName);
@@ -217,10 +217,18 @@ public class MgmtProduct extends javax.swing.JPanel {
                         sqlite.updateProductStock(itemName, itemStock - userQty);
                     }
                     sqlite.addLogs("PRODUCT", UserAuth.username, "User purchased " + userQty + " stock of " + itemName);
+                    JOptionPane.showMessageDialog(null,
+                                                "Successfully purchased " + userQty + " stock of " + itemName,
+                                                 "Purchase Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                     init();
                 }
                 else{
                     sqlite.addLogs("PRODUCT", UserAuth.username, "User unsuccessfully purchased " + itemName);
+                    JOptionPane.showMessageDialog(null,
+                                                "Purchase unsuccessful.",
+                                                 "Purchase Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                     System.out.println("Purchase unsuccessful.");
                 }
             }
@@ -252,10 +260,18 @@ public class MgmtProduct extends javax.swing.JPanel {
             if(sqlite.getProduct(itemName) == null && !itemName.equals("") && itemStock > 0 && itemPrice > 0){
                 sqlite.addProduct(itemName, itemStock, itemPrice);
                 sqlite.addLogs("PRODUCT", UserAuth.username, "User added product " + itemName + " with a stock of " + itemStock);
+                JOptionPane.showMessageDialog(null,
+                                                "Product successfully added.",
+                                                 "Add Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                 init();
             }
             else{
                 sqlite.addLogs("PRODUCT", UserAuth.username, "User unsuccessfully added product " + itemName + ". Product already exists.");
+                JOptionPane.showMessageDialog(null,
+                                                "Product unsuccessfully added.",
+                                                 "Add Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Product already exists.");
             }
         }
@@ -291,10 +307,18 @@ public class MgmtProduct extends javax.swing.JPanel {
                 if(newStock > 0 && newPrice > 0){
                     sqlite.updateProduct(oldName, newName, newStock, newPrice);
                     sqlite.addLogs("PRODUCT", UserAuth.username, "User successfully edited product " + oldName);
+                    JOptionPane.showMessageDialog(null,
+                                                "Product successfully edited.",
+                                                 "Edit Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                     init();
                 }
                 else{
                     sqlite.addLogs("PRODUCT", UserAuth.username, "User unsuccessfully edited  product " + oldName);
+                    JOptionPane.showMessageDialog(null,
+                                                "Product edit unsuccessful.",
+                                                 "Edit Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                     System.out.println("Edit unsuccessful.");
                 }
                 
@@ -310,6 +334,10 @@ public class MgmtProduct extends javax.swing.JPanel {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
                 sqlite.removeProduct(itemName);
                 sqlite.addLogs("PRODUCT", UserAuth.username, "User sucessfully deleted product " + itemName);
+                JOptionPane.showMessageDialog(null,
+                                                "Product deleted.",
+                                                 "Delete Product",
+                                             JOptionPane.INFORMATION_MESSAGE);
                 init();
             }
         }

@@ -200,6 +200,10 @@ public class MgmtUser extends javax.swing.JPanel {
                 sqlite.addLogs("USER", 
                                UserAuth.username, 
                                "User updated " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " role to " + result.charAt(0));
+                JOptionPane.showMessageDialog(null,
+                                                "Successfully updated " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " role to " + result.charAt(0),
+                                                 "Edit Role",
+                                             JOptionPane.INFORMATION_MESSAGE);
                 init();
                 
             }
@@ -245,6 +249,10 @@ public class MgmtUser extends javax.swing.JPanel {
                 sqlite.addLogs("USER", 
                                UserAuth.username, 
                                "User " + state + "ed " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + ".");
+                JOptionPane.showMessageDialog(null,
+                                                "Successfully " + state + "ed user " +  tableModel.getValueAt(table.getSelectedRow(), 0).toString() + ".",
+                                                 "Lock/Unlock User",
+                                             JOptionPane.INFORMATION_MESSAGE);
                 init();
             }
         }
@@ -267,13 +275,44 @@ public class MgmtUser extends javax.swing.JPanel {
                 System.out.println(password.getText());
                 System.out.println(confpass.getText());
                 if(password.getText().equals(confpass.getText())){
-                    String pass = Main.hashPassword(password.getText());
-                    sqlite.updateUserPassword(tableModel.getValueAt(table.getSelectedRow(), 0).toString(),
-                                              pass);
-                    sqlite.addLogs("USER", 
-                               UserAuth.username, 
-                                      "User password of " + tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " successfully changed.");
-                    init();
+                    String puncs = ",./<>?;:'[]{}|-=_+!@#$%^&*()";
+                    int strength = 0;
+                    int uppercase = 0;
+                    int digit = 0;
+                    int punctuation = 0;
+                    for(int i=0 ; i < password.getText().length() ; i++){
+                        if(Character.isDigit(password.getText().charAt(i))){
+                            digit = 1;
+                        }
+                        if(Character.isUpperCase(password.getText().charAt(i))){
+                            uppercase = 1;
+                        }
+                        if(puncs.contains("" + password.getText().charAt(i))){
+                            punctuation = 1;
+                        }
+                    }
+                    strength = uppercase + digit + punctuation;
+                    if(strength == 3){
+                        String pass = Main.hashPassword(password.getText());
+                        sqlite.updateUserPassword(tableModel.getValueAt(table.getSelectedRow(), 0).toString(),
+                                                  pass);
+                        sqlite.addLogs("USER", 
+                                   UserAuth.username, 
+                                          "User password of " + tableModel.getValueAt(table.getSelectedRow(), 0).toString() + " successfully changed.");
+                        JOptionPane.showMessageDialog(null,
+                                                "Password successfully changed.",
+                                                 "Change Password Successful",
+                                             JOptionPane.INFORMATION_MESSAGE);
+                        init();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,
+                                                "Password unsuccessfully changed. Make sure to have one uppercase, one lowercase, at least 8 characters, and one valid unicode character.",
+                                                 "Change Password Unsuccessful",
+                                             JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println();
+                    }
+                    
                 }
                 else{
                     System.out.println("Passwords do not match. Change password unsuccessful.");
